@@ -40,17 +40,15 @@ public class StationData {
                 JuheData.GET, parameters, new DataCallBack() {
                     @Override
                     public void onSuccess(int i, String s) {
-                        if (i == 0) {
                             ArrayList<Station> list = parser(s);
                             if (list != null & mHandler != null) {
                                 Message msg = Message.obtain(mHandler, 0x01,
                                         list);
+                                //向主线程发送消息
                                 msg.sendToTarget();
-                            }
                         }
 
                     }
-
                     @Override
                     public void onFinish() {
                         Toast.makeText(context, "finish",
@@ -60,8 +58,10 @@ public class StationData {
 
                     @Override
                     public void onFailure(int i, String s, Throwable throwable) {
-                        Message msg = Message.obtain(mHandler, 0x02, s);
-                        msg.sendToTarget();
+                        if(i==0) {
+                            Message msg = Message.obtain(mHandler, 0x02, s);
+                            msg.sendToTarget();
+                        }
                     }
 
                 });
@@ -86,7 +86,7 @@ public class StationData {
                     s.setLat(dataJSON.getDouble("lat"));
                     s.setLon(dataJSON.getDouble("lon"));
                     s.setDistance(dataJSON.getInt("distance"));
-                    //省控
+                    //省控油价
                     JSONObject priceJson = dataJSON.getJSONObject("price");
                     ArrayList<Petrol> priceList = new ArrayList<Petrol>();
                     Iterator<String> priceI = priceJson.keys();
@@ -99,7 +99,7 @@ public class StationData {
                                 priceList.add(p);
                     }
                     s.setPriceList(priceList);
-                    //加油站
+                    //加油站油价
                     JSONObject gastPriceJson = dataJSON
                             .getJSONObject("gastprice");
                     ArrayList<Petrol> gastPriceList = new ArrayList<Petrol>();

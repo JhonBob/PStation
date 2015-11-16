@@ -25,13 +25,12 @@
     </uses-permission>
 
     <application
-        android:name=".PsApplication"
+        android:name=".application.PsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="oGyBH2WIz36fhEsRG4lVQjlp" />
@@ -40,7 +39,7 @@
             android:value="JHe180a559f100ebb12158f6b7cc625e69" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -55,6 +54,13 @@
             android:enabled="true"
             android:process=":remote" >
         </service>
+
+        <activity android:name=".main.StationListActivity" >
+        </activity>
+        <activity android:name=".main.StationInfoActivity" >
+        </activity>
+        <activity android:name=".main.RouteActivity" >
+        </activity>
     </application>
 
 </manifest>
